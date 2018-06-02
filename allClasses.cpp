@@ -16,6 +16,7 @@ Animal::Animal( const char* color, int childs, float avgLifetime )
 // {
 
 // };
+virtual ~Animal::Animal();
 
 const char* Animal::GetColor() const
 {
@@ -47,6 +48,8 @@ Mammals::Mammals( const char* color, int childs, float avgLifetime, float preg, 
 // {
     
 // };//init the Mammals from a binary file
+
+virtual ~Mammals::Mammals();
 
 float Mammals::GetPregnanceTime() const
 {
@@ -264,15 +267,15 @@ void Zoo::AddAnimal( Animal* an )
     m_an = new Animal(an.GetColor, an.GetChildCount, an.GetLifetime)
 };//creates a copy of "an" (deep copy) and adds an animal to the array
 
-public:
-	Zoo& operator+( Animal* an );//adds an animal (only pointer, no copy needed) to the class and returns this with the change
-	Zoo operator+( const Zoo& other ) const; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
-
-public:
-	friend ofstream& operator<<( ofstream& out, const Zoo& z );//operator to write the zoo to a text file
-	friend ifstream& operator>>( ifstream& in, Zoo& z );//operator to read the zoo from a text file
-
-public:
-	void Save( ofstream& ofs ) const;//method to save the info to a text file
-	void Load( ifstream& ifs );//method to load the info from a text file
-	void SaveBin( ofstream& ofs ) const;//method to save the info to a binary file
+//public:
+//	Zoo& operator+( Animal* an );//adds an animal (only pointer, no copy needed) to the class and returns this with the change
+//	Zoo operator+( const Zoo& other ) const; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
+//
+//public:
+//	friend ofstream& operator<<( ofstream& out, const Zoo& z );//operator to write the zoo to a text file
+//	friend ifstream& operator>>( ifstream& in, Zoo& z );//operator to read the zoo from a text file
+//
+//public:
+//	void Save( ofstream& ofs ) const;//method to save the info to a text file
+//	void Load( ifstream& ifs );//method to load the info from a text file
+//	void SaveBin( ofstream& ofs ) const;//method to save the info to a binary file
