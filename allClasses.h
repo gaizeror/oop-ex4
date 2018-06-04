@@ -17,7 +17,7 @@ protected:
 
 public:
 	//TBD
-	virtual ~Animal();
+//	virtual ~Animal();
 
 public:
 	const char* GetColor() const;//return the color of the animal
@@ -30,13 +30,13 @@ protected:
 	float	m_avgLifetime;
 };
 
-class Mammals : public Animal
+class Mammals : virtual public Animal
 {
 public:
 	Mammals();//set the default color to GRAY and other params to 0
 	Mammals( const char* color, int childs, float avgLifetime, float preg, float milk );//init the Mammals with a given attributes
 	Mammals( ifstream& in_file );//init the Mammals from a binary file
-	virtual ~Mammals();
+//	virtual ~Mammals();
 	
 public:
 	float		GetPregnanceTime() const;//return the pregnance time of the animal
@@ -53,7 +53,7 @@ public:
 	Birds();//set the default color to GRAY and other params to 0
 	Birds( const char* color, int childs, float avgLifetime, float incubation );//init the Birds with a given attributes
 	Birds( ifstream& in_file );//init the Birds from a binary file
-	virtual ~Birds();
+//	virtual ~Birds();
 	
 public:
 	float		GetIncubationTime() const;//return the incubation time of the animal
@@ -62,13 +62,13 @@ protected:
 	float m_incubationTime;
 };
 
-class Fish : public Animal
+class Fish : virtual public Animal
 {
 public:
 	Fish();//set the default color to GRAY and other params to 0
 	Fish( const char* color, int childs, float avgLifetime, int fin, int gills );//init the Fish with a given attributes
 	Fish( ifstream& in_file );//init the Fish from a binary file
-	virtual ~Fish();
+//	virtual ~Fish();
 	
 public:
 	int		GetFinCount() const;//return the fin count of the animal
@@ -85,7 +85,7 @@ public:
 	Horse();//set the default color to GRAY and other params to 0
 	Horse( const char* color, int childs, float avgLifetime, float preg, float milk, const char* type );//init the Horse with a given attributes
 	Horse( ifstream& in_file );//init the Horse from a binary file
-	virtual ~Horse();
+//	virtual ~Horse();
 	
 public:
 	const char*		GetType() const;//return the type of the horse
@@ -100,7 +100,7 @@ public:
 	Flamingo();//set the default color to GRAY and other params to 0
 	Flamingo( const char* color, int childs, float avgLifetime, float incubation, float avgHeight );//init the Flamingo with a given attributes
 	Flamingo( ifstream& in_file );//init the Flamingo from a binary file
-	virtual ~Flamingo();
+//	virtual ~Flamingo();
 
 public:
 	float		GetHeight() const;//return the avg height of the flamingo
@@ -115,7 +115,7 @@ public:
 	MammalsFish();//set the default color to GRAY and other params to 0
 	MammalsFish( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills );//init the MammalsFish with a given attributes
 	MammalsFish( ifstream& in_file );//init the MammalsFish from a binary file
-	virtual ~MammalsFish();
+//	virtual ~MammalsFish();
 };
 
 class GoldFish : public MammalsFish
@@ -124,7 +124,7 @@ public:
 	GoldFish();//set the default color to GRAY and other params to 0
 	GoldFish( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL );//init the GoldFish with a given attributes
 	GoldFish( ifstream& in_file );//init the GoldFish from a binary file
-	virtual ~GoldFish();
+//	virtual ~GoldFish();
 	
 public:
 	float		GetWeight() const;//return the avg weight of the gold fish
@@ -141,7 +141,7 @@ public:
 	Mermaid();//set the default color to GRAY and other params to 0
 	Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName );//init the Mermaid with a given attributes
 	Mermaid( ifstream& in_file );//init the Mermaid from a binary file
-	virtual ~Mermaid();
+//	virtual ~Mermaid();
 	
 public:
 	const char*		GetFirstName() const;//return the first name of the mermaid
@@ -158,7 +158,7 @@ public:
 	Zoo();//default c'tor  - all to 0 or null
 	Zoo( const char* name, const char* address, float ticket, const char* open, const char* close );//c'tor with data - init class
 	Zoo( ifstream& in_file );//c'tor that gets a binary file and loads the data of the zoo from the file
-	virtual ~Zoo();//d'tor
+//	virtual ~Zoo();//d'tor
 	
 public:
 	const char*		GetName() const;//return the name of the zoo
