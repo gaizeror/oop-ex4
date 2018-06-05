@@ -19,10 +19,11 @@ public:
 	//TBD
 //	virtual ~Animal();
     virtual Animal* copy();
+    void Save( ofstream& ofs);
+    void Load(ifstream& ifs);
 
 
 public:
-    void Save( ofstream& ofs);
 	const char* GetColor() const;//return the color of the animal
 	int			GetChildCount() const;//return the child count of the animal
 	float		GetLifetime() const;//return the life time of the animal
@@ -44,6 +45,7 @@ public:
 protected:
 	virtual Animal* copy();
     void Save( ofstream& ofs);
+    void Load(ifstream& ifs);
 	
 public:
 	float		GetPregnanceTime() const;//return the pregnance time of the animal
@@ -68,6 +70,7 @@ public:
 protected:
     virtual Animal* copy();
     void Save( ofstream& ofs);
+    void Load(ifstream& ifs);
 
 protected:
 	float m_incubationTime;
@@ -84,6 +87,7 @@ public:
 protected:
     virtual Animal* copy();
     void Save( ofstream& ofs);
+    void Load(ifstream& ifs);
 	
 public:
 	int		GetFinCount() const;//return the fin count of the animal
@@ -106,6 +110,7 @@ public:
 public:
 	const char*		GetType() const;//return the type of the horse
     void Save( ofstream& ofs);
+    void Load(ifstream& ifs);
 
 protected:
 	char*	m_type;
@@ -123,6 +128,7 @@ public:
 public:
 	float		GetHeight() const;//return the avg height of the flamingo
     void Save( ofstream& ofs);
+    void Load(ifstream& ifs);
 
 protected:
 	float m_avgHeight;
@@ -139,6 +145,7 @@ public:
 protected:
     virtual Animal* copy();
     virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 };
 
 class GoldFish : public MammalsFish
@@ -154,6 +161,7 @@ public:
 	float		GetWeight() const;//return the avg weight of the gold fish
 	float		GetLength() const;//return the avg length of the gold fish
     void Save( ofstream& ofs);
+    void Load(ifstream& ifs);
 
 protected:
 	float m_avgWeight;
@@ -167,13 +175,15 @@ public:
 	Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName );//init the Mermaid with a given attributes
 	Mermaid( ifstream& in_file );//init the Mermaid from a binary file
 //	virtual ~Mermaid();
-    Animal* copy();
+
+
 	
 public:
 	const char*		GetFirstName() const;//return the first name of the mermaid
 	const char*		GetLastName() const;//return the last name of the mermaid
+    Animal* copy();
     void Save( ofstream& ofs);
-
+    void Load(ifstream& ifs);
 protected:
 	char* m_firstName;
 	char* m_lastName;
@@ -217,6 +227,7 @@ private:
     void LoadAnimals ( ifstream& is );
     void clear();
     Animal* CreateAnimal( ifstream& is );
+    void SaveAnimalsBin(ofstream& ofs) const;
 
 private:
 	char*		m_name;
