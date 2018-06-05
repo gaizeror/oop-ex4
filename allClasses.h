@@ -14,11 +14,12 @@ protected:
 	Animal();//set the default color to GRAY and other params to 0
 	Animal( const char* color, int childs, float avgLifetime );//init the Animal with a given attributes
 	Animal( ifstream& in_file );//init the Animal from a binary file
-	virtual Animal* copy();
+
 
 public:
 	//TBD
 //	virtual ~Animal();
+    virtual Animal* copy();
 
 public:
 	const char* GetColor() const;//return the color of the animal

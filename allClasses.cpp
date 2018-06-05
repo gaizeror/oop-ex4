@@ -216,8 +216,15 @@ Animal** Zoo::GetAnimals() const
 
 void Zoo::AddAnimal( Animal* an )
 {
-
-	m_animals[m_numOfAnimals] = an;
+    Animal* newAnimal = an->copy();
+    Animal** new_array = new Animal*[m_numOfAnimals + 1];
+    for (int i = 0; i < m_numOfAnimals; i++)
+    {
+        new_array[i] = m_animals[i];
+    }
+    new_array[m_numOfAnimals] = newAnimal;
+    delete this->m_animals;
+    this->m_animals = new_array;
 	m_numOfAnimals++;
 };//creates a copy of "an" (deep copy) and adds an animal to the array
 

@@ -7,5 +7,5 @@ int main() {
     z1.AddAnimal( new Horse( "GRAY", 2, 20, 11, 3, "Selle Francais" ) );
     z1.AddAnimal( new Mermaid( "BROWN", 3, 65.5, 9, 2, 2, 4, "Ariel", "Princess" ) );
 
-    cout << "here" << endl;
+    cout << z1.GetAnimals()[0]->GetColor() << endl;
 }
