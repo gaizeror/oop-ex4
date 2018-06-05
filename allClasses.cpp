@@ -316,5 +316,10 @@ void Zoo::SaveAnimals(ofstream &ofs) const {
         m_animals[i]->Save( ofs );	// calls the virtual function p->save(os);
     }
 }
-//	void Load( ifstream& ifs );//method to load the info from a text file
+void Zoo::Load( ifstream& ifs ){
+    ifs >> m_name >> m_address >> m_ticketPrice>> m_openHours >> m_closeHours;
+
+//    loadAnimals( ifs );
+};//method to load the info from a text file
+
 //	void SaveBin( ofstream& ofs ) const;//method to save the info to a binary file

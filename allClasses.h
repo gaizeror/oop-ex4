@@ -20,6 +20,7 @@ public:
 //	virtual ~Animal();
     virtual Animal* copy();
 
+
 public:
     void Save( ofstream& ofs);
 	const char* GetColor() const;//return the color of the animal
