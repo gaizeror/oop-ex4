@@ -5,7 +5,11 @@ using namespace std;
 //Animal
 Animal::Animal() : m_color("GRAY"), m_childCount(0), m_avgLifetime(0) {};
 Animal::Animal( const char* color, int childs, float avgLifetime ) :  m_color(strdup(color)), m_childCount(childs), m_avgLifetime(avgLifetime) {};
-
+Animal::Animal(ifstream& in_file) {
+    in_file.read((char*)&m_color, sizeof(m_color));
+    in_file.read((char*)&m_childCount, sizeof(m_childCount));
+    in_file.read((char*)&m_avgLifetime, sizeof(m_avgLifetime));
+}
 // TBD
 Animal* Animal::copy() {};
 Animal* Mammals::copy() {};
@@ -57,6 +61,10 @@ Mammals::Mammals() : m_milkLiters(0), m_pregnancyTime(0) {};
 
 Mammals::Mammals( const char* color, int childs, float avgLifetime, float preg, float milk ) : Animal(color, childs, avgLifetime), m_pregnancyTime(preg), m_milkLiters(milk) {};
 
+Mammals::Mammals(ifstream& in_file): Animal(in_file) {
+    in_file.read((char*)&m_pregnancyTime, sizeof(m_pregnancyTime));
+    in_file.read((char*)&m_milkLiters, sizeof(m_milkLiters));
+}
 //TBD
 // Mammals::Mammals( ifstream& in_file )
 // {
@@ -82,7 +90,9 @@ Birds::Birds() : m_incubationTime(0) {}
 Birds::Birds( const char* color, int childs, float avgLifetime, float incubation ) : Animal(color, childs, avgLifetime), m_incubationTime(incubation) {}
 
 
-//Birds( ifstream& in_file );//init the Birds from a binary file
+Birds::Birds(ifstream& in_file): Animal(in_file) {
+    in_file.read((char*)&m_incubationTime, sizeof(m_incubationTime));
+}
 
 
 float Birds::GetIncubationTime() const
@@ -95,7 +105,11 @@ Fish::Fish() : m_finCount(0), m_gillsCount(0) {};//set the default color to GRAY
 
 Fish::Fish(const char* color, int childs, float avgLifetime, int fin, int gills) : Animal(color, childs, avgLifetime), m_finCount(fin), m_gillsCount(gills) {}
 
-//Fish( ifstream& in_file );//init the Fish from a binary file
+Fish::Fish(ifstream& in_file): Animal(in_file) {
+    in_file.read((char*)&m_finCount, sizeof(m_finCount));
+    in_file.read((char*)&m_gillsCount, sizeof(m_gillsCount));
+}
+
 
 int	Fish::GetFinCount() const
 {
@@ -112,7 +126,10 @@ Horse::Horse() : m_type(NULL) {};//set the default color to GRAY and other param
 
 Horse::Horse(const char* color, int childs, float avgLifetime, float preg, float milk, const char* type) : Mammals(color, childs, avgLifetime, preg, milk), m_type(strdup(type)) {}
 
-//Horse( ifstream& in_file );//init the Horse from a binary file
+Horse::Horse(ifstream& in_file): Mammals(in_file) {
+    in_file.read((char*)&m_type, sizeof(m_type));
+}
+
 
 const char*	Horse::GetType() const
 {
@@ -127,6 +144,9 @@ Flamingo::Flamingo() : m_avgHeight(0) {};//set the default color to GRAY and oth
 
 Flamingo::Flamingo(const char* color, int childs, float avgLifetime, float incubation, float avgHeight) : Birds(color, childs, avgLifetime, incubation), m_avgHeight(avgHeight) {}
 
+Flamingo::Flamingo(ifstream& in_file): Mammals(in_file) {
+    in_file.read((char*)&m_avgHeight, sizeof(m_avgHeight));
+}
 //Flamingo( ifstream& in_file );//init the Flamingo from a binary file
 
 //virtual ~Flamingo();
