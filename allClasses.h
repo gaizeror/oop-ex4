@@ -204,6 +204,9 @@ public:
 	void SaveBin( ofstream& ofs ) const;//method to save the info to a binary file
 
 private:
+    void SaveAnimals( ofstream& ofs ) const;
+
+private:
 	char*		m_name;
 	char*		m_address;
 	float		m_ticketPrice;

@@ -265,6 +265,23 @@ Zoo Zoo::operator+( const Zoo& other ) const{
 //	friend ifstream& operator>>( ifstream& in, Zoo& z );//operator to read the zoo from a text file
 //
 //public:
-//	void Save( ofstream& ofs ) const;//method to save the info to a text file
+void Zoo::Save( ofstream& ofs ) const{
+    ofs << m_name << " ";
+    ofs << m_address << " ";
+    ofs << m_ticketPrice << " ";
+    ofs << m_openHours << " ";
+    ofs << m_closeHours << " ";
+
+    saveAnimals(ofs);
+};//method to save the info to a text file
+
+void Zoo::SaveAnimals(ofstream &ofs) const {
+    ofs << m_numOfAnimals << endl;
+
+    for( unsigned int i = 0; i < m_numOfAnimals; ++i )
+    {
+        m_animals[i]->Save( ofs );	// calls the virtual function p->save(os);
+    }
+}
 //	void Load( ifstream& ifs );//method to load the info from a text file
 //	void SaveBin( ofstream& ofs ) const;//method to save the info to a binary file
