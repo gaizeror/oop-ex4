@@ -248,7 +248,17 @@ Zoo& Zoo::operator+( Animal* an ){
     m_animals[m_numOfAnimals] = an;
     m_numOfAnimals++;
 };//adds an animal (only pointer, no copy needed) to the class and returns this with the change
-//	Zoo operator+( const Zoo& other ) const; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
+Zoo Zoo::operator+( const Zoo& other ) const{
+    Zoo* newZoo = new Zoo(this->m_name, this->m_address, m_ticketPrice, this->m_openHours, this->m_closeHours);
+    for (unsigned i = 0; i < sizeof(m_animals); i++){
+        newZoo->AddAnimal(m_animals[i]);
+    }
+    Animal** otherAnimals = other.GetAnimals();
+    for (unsigned i = 0; i < sizeof(otherAnimals); i++){
+        newZoo->AddAnimal(otherAnimals[i]);
+    }
+
+}; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
 //
 //public:
 //	friend ofstream& operator<<( ofstream& out, const Zoo& z );//operator to write the zoo to a text file
