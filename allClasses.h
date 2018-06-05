@@ -19,8 +19,8 @@ public:
 	//TBD
 //	virtual ~Animal();
     virtual Animal* copy();
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 
 
 public:
@@ -44,12 +44,12 @@ public:
 
 protected:
 	virtual Animal* copy();
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
 	
 public:
 	float		GetPregnanceTime() const;//return the pregnance time of the animal
 	float		GetMilk() const;//return the milk liters of the animal
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 
 protected:
 	float m_pregnancyTime;
@@ -66,11 +66,11 @@ public:
 	
 public:
 	float		GetIncubationTime() const;//return the incubation time of the animal
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 
 protected:
     virtual Animal* copy();
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
 
 protected:
 	float m_incubationTime;
@@ -86,12 +86,12 @@ public:
 
 protected:
     virtual Animal* copy();
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
 	
 public:
 	int		GetFinCount() const;//return the fin count of the animal
 	int		GetGillsCount() const;//return the gills count of the animal
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 
 protected:
 	int m_finCount;
@@ -109,8 +109,8 @@ public:
 	
 public:
 	const char*		GetType() const;//return the type of the horse
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 
 protected:
 	char*	m_type;
@@ -127,8 +127,8 @@ public:
 
 public:
 	float		GetHeight() const;//return the avg height of the flamingo
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 
 protected:
 	float m_avgHeight;
@@ -140,12 +140,14 @@ public:
 	MammalsFish();//set the default color to GRAY and other params to 0
 	MammalsFish( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills );//init the MammalsFish with a given attributes
 	MammalsFish( ifstream& in_file );//init the MammalsFish from a binary file
+
+public:
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 //	virtual ~MammalsFish();
 
 protected:
     virtual Animal* copy();
-    virtual void Save( ofstream& ofs);
-    virtual void Load(ifstream& ifs);
 };
 
 class GoldFish : public MammalsFish
@@ -160,8 +162,8 @@ public:
 public:
 	float		GetWeight() const;//return the avg weight of the gold fish
 	float		GetLength() const;//return the avg length of the gold fish
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 
 protected:
 	float m_avgWeight;
@@ -182,8 +184,8 @@ public:
 	const char*		GetFirstName() const;//return the first name of the mermaid
 	const char*		GetLastName() const;//return the last name of the mermaid
     Animal* copy();
-    void Save( ofstream& ofs);
-    void Load(ifstream& ifs);
+    virtual void Save( ofstream& ofs);
+    virtual void Load(ifstream& ifs);
 protected:
 	char* m_firstName;
 	char* m_lastName;

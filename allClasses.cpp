@@ -84,11 +84,13 @@ Mammals::Mammals(ifstream& in_file): Animal(in_file) {
 //virtual ~Mammals::Mammals();
 
 void Mammals::Save(ofstream &ofs) {
+    Animal::Save(ofs);
     ofs << m_pregnancyTime << " ";
     ofs << m_milkLiters << " ";
 }
 void Mammals::Load(ifstream& ifs)
 {
+    Animal::Load(ofs);
     ifs >> m_pregnancyTime >> m_milkLiters;
 }
 
@@ -114,10 +116,12 @@ Birds::Birds(ifstream& in_file): Animal(in_file) {
 }
 
 void Birds::Save(ofstream &ofs) {
+    Animal::Save(ofs);
     ofs << m_incubationTime << " ";
 }
 void Birds::Load(ifstream& ifs)
 {
+    Animal::Load(ifs);
     ifs >> m_incubationTime;
 }
 float Birds::GetIncubationTime() const
@@ -136,11 +140,13 @@ Fish::Fish(ifstream& in_file): Animal(in_file) {
 }
 
 void Fish::Save(ofstream &ofs) {
+    Animal::Save(ofs);
     ofs << m_finCount << " ";
     ofs << m_gillsCount << " ";
 }
 void Fish::Load(ifstream& ifs)
 {
+    Animal::Load(ifs);
     ifs >> m_finCount >> m_gillsCount;
 }
 int	Fish::GetFinCount() const
@@ -163,10 +169,12 @@ Horse::Horse(ifstream& in_file): Mammals(in_file) {
 }
 
 void Horse::Save(ofstream &ofs) {
+    Mammals::Save(ofs);
     ofs << m_type << " ";
 }
 void Horse::Load(ifstream& ifs)
 {
+    Mammals::Load(ifs);
     ifs >> m_type;
 }
 const char*	Horse::GetType() const
@@ -189,10 +197,12 @@ Flamingo::Flamingo(ifstream& in_file): Birds(in_file) {
 //virtual ~Flamingo();
 
 void Flamingo::Save(ofstream &ofs) {
+    Birds::Save(ofs);
     ofs << m_avgHeight << " ";
 }
 void Flamingo::Load(ifstream& ifs)
 {
+    Birds::Load(ifs);
     ifs >> m_avgHeight;
 }
 float Flamingo::GetHeight() const
@@ -206,7 +216,10 @@ MammalsFish::MammalsFish(const char* color, int childs, float avgLifetime, float
 //MammalsFish::MammalsFish( ifstream& in_file );//init the MammalsFish from a binary file
 //virtual ~MammalsFish();
 
-void MammalsFish::Save(ofstream &ofs) {};
+void MammalsFish::Save(ofstream &ofs) {
+    Mammals::Save(ofs);
+    Fish::Save(ofs);
+};
 void MammalsFish::Load(ifstream& ifs) {};
 
 GoldFish::GoldFish() : m_avgWeight(0), m_avgLength(0) {};//set the default color to GRAY and other params to 0
@@ -215,11 +228,13 @@ GoldFish::GoldFish(const char* color, int childs, float avgLifetime, float preg,
 //virtual ~GoldFish();
 
 void GoldFish::Save(ofstream &ofs) {
+    MammalsFish::Save(ofs);
     ofs << m_avgWeight << " ";
     ofs << m_avgLength << " ";
 }
 void GoldFish::Load(ifstream& ifs)
 {
+    MammalsFish::Load(ifs);
     ifs >> m_avgWeight >> m_avgLength;
 }
 float GoldFish::GetWeight() const
@@ -240,11 +255,13 @@ Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, 
 //virtual ~Mermaid();
 
 void Mermaid::Save(ofstream &ofs) {
+    MammalsFish::Save(ofs);
     ofs << m_firstName << " ";
     ofs << m_lastName << " ";
 }
 void Mermaid::Load(ifstream& ifs)
 {
+    MammalsFish::Load(ifs);
     ifs >> m_firstName >> m_lastName;
 }
 const char*	Mermaid::GetFirstName() const
