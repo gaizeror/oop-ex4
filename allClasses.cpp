@@ -162,7 +162,7 @@ Flamingo::Flamingo() : m_avgHeight(0) {};//set the default color to GRAY and oth
 
 Flamingo::Flamingo(const char* color, int childs, float avgLifetime, float incubation, float avgHeight) : Birds(color, childs, avgLifetime, incubation), m_avgHeight(avgHeight) {}
 
-Flamingo::Flamingo(ifstream& in_file): Mammals(in_file) {
+Flamingo::Flamingo(ifstream& in_file): Birds(in_file) {
     in_file.read((char*)&m_avgHeight, sizeof(m_avgHeight));
 }
 //Flamingo( ifstream& in_file );//init the Flamingo from a binary file
@@ -316,10 +316,54 @@ void Zoo::SaveAnimals(ofstream &ofs) const {
         m_animals[i]->Save( ofs );	// calls the virtual function p->save(os);
     }
 }
+void Zoo::clear() {
+    for( unsigned int i = 0; i < m_numOfAnimals; ++i )
+    {
+        if( m_animals[i] )
+            delete m_animals[i];
+
+        m_animals[i] = NULL;
+    }
+
+    delete m_animals;
+}
+Animal* Zoo::CreateAnimal(ifstream& is)
+{
+    char* animalType;
+
+    is >> animalType;
+
+    if( strcmp(animalType, "Horse" ) == 0)
+        return new Horse;
+    else if( strcmp(animalType, "GoldFish" ) == 0)
+        return new GoldFish;
+    else if( strcmp(animalType, "Flamingo" ) == 0)
+        return new Flamingo;
+    else if( strcmp(animalType, "Mermaid" ) == 0)
+        return new Mermaid;
+    else return NULL;
+}
 void Zoo::Load( ifstream& ifs ){
     ifs >> m_name >> m_address >> m_ticketPrice>> m_openHours >> m_closeHours;
 
-//    loadAnimals( ifs );
+    LoadAnimals( ifs );
 };//method to load the info from a text file
+void Zoo::LoadAnimals(ifstream &is) {
+    clear(); // first clear old content.
+
+    is >> m_numOfAnimals;
+
+    // allocate memory for products.
+    m_animals = new Animal*[m_numOfAnimals];
+
+    for( unsigned int i = 0; i < m_numOfAnimals && !is.eof(); ++i )
+    {
+        Animal* p = CreateAnimal( is );  // Creates a new product, identify its type in running time.
+
+        p->Load( is );   // calls the virtual function p->read(is);
+
+        m_animals[i] = p;
+    }
+}
 
 //	void SaveBin( ofstream& ofs ) const;//method to save the info to a binary file

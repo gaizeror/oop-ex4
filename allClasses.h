@@ -214,6 +214,9 @@ public:
 
 private:
     void SaveAnimals( ofstream& ofs ) const;
+    void LoadAnimals ( ifstream& is );
+    void clear();
+    Animal* CreateAnimal( ifstream& is );
 
 private:
 	char*		m_name;
