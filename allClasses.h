@@ -225,6 +225,7 @@ public:
 
 public:
 	Zoo& operator+( Animal* an );//adds an animal (only pointer, no copy needed) to the class and returns this with the change
+    Zoo& operator+=( Animal* an );//adds an animal (only pointer, no copy needed) to the class and returns this with the change
 	Zoo operator+( const Zoo& other ) const; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
 
 public:

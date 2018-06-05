@@ -398,6 +398,10 @@ Zoo Zoo::operator+( const Zoo& other ) const{
     }
 
 }; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
+Zoo& Zoo::operator+=( Animal* an ){
+    AddAnimal(an);
+    return *this;
+};
 //
 //public:
 //	friend ofstream& operator<<( ofstream& out, const Zoo& z );//operator to write the zoo to a text file
