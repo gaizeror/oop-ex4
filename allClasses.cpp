@@ -235,7 +235,7 @@ Flamingo::Flamingo(ifstream& in_file): Birds(in_file) {
 //virtual ~Flamingo();
 void Flamingo::SaveBin(ofstream& ofs) const
 {
-    Flamingo::SaveBin(ofs);
+    Birds::SaveBin(ofs);
     ofs.write((char*)&m_avgHeight,sizeof(m_avgHeight));
 }
 void Flamingo::Save(ofstream &ofs) {
@@ -399,11 +399,11 @@ Zoo& Zoo::operator+( Animal* an ){
 };//adds an animal (only pointer, no copy needed) to the class and returns this with the change
 Zoo Zoo::operator+( const Zoo& other ) const{
     Zoo* newZoo = new Zoo(this->m_name, this->m_address, m_ticketPrice, this->m_openHours, this->m_closeHours);
-    for (unsigned i = 0; i < sizeof(m_animals); i++){
+    for (unsigned i = 0; i < m_numOfAnimals; i++){
         newZoo->AddAnimal(m_animals[i]);
     }
     Animal** otherAnimals = other.GetAnimals();
-    for (unsigned i = 0; i < sizeof(otherAnimals); i++){
+    for (unsigned i = 0; i < m_numOfAnimals; i++){
         newZoo->AddAnimal(otherAnimals[i]);
     }
     return *newZoo;
@@ -511,9 +511,8 @@ ofstream& operator<<( ofstream& out, const Zoo& z )
     z.Save(out);
     return out;
 };
-ifstream& operator>>( ifstream& ifs, Zoo& z )
+ifstream& operator>>( ifstream& in, Zoo& z )
 {
-    z.Load( ifs );
-
-    return ifs;
+    z.Load( in );
+    return in;
 }
