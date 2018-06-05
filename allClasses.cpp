@@ -236,20 +236,18 @@ Animal** Zoo::GetAnimals() const
 
 void Zoo::AddAnimal( Animal* an )
 {
+    m_animals = (Animal**)realloc(m_animals, (m_numOfAnimals+1)*sizeof(Animal));
     Animal* newAnimal = an->copy();
-    Animal** new_array = new Animal*[m_numOfAnimals + 1];
-    for (int i = 0; i < m_numOfAnimals; i++)
-    {
-        new_array[i] = m_animals[i];
-    }
-    new_array[m_numOfAnimals] = newAnimal;
-    delete this->m_animals;
-    this->m_animals = new_array;
+    m_animals[m_numOfAnimals] = newAnimal;
 	m_numOfAnimals++;
 };//creates a copy of "an" (deep copy) and adds an animal to the array
 
 //public:
-//	Zoo& operator+( Animal* an );//adds an animal (only pointer, no copy needed) to the class and returns this with the change
+Zoo& Zoo::operator+( Animal* an ){
+    m_animals = (Animal**)realloc(m_animals, (m_numOfAnimals+1)*sizeof(Animal));
+    m_animals[m_numOfAnimals] = an;
+    m_numOfAnimals++;
+};//adds an animal (only pointer, no copy needed) to the class and returns this with the change
 //	Zoo operator+( const Zoo& other ) const; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
 //
 //public:
