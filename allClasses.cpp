@@ -4,9 +4,35 @@ using namespace std;
 
 //Animal
 Animal::Animal() : m_color("GRAY"), m_childCount(0), m_avgLifetime(0) {};
-Animal::Animal( const char* color, int childs, float avgLifetime ) :  m_color(_strdup(color)), m_childCount(childs), m_avgLifetime(avgLifetime) {};
+Animal::Animal( const char* color, int childs, float avgLifetime ) :  m_color(strdup(color)), m_childCount(childs), m_avgLifetime(avgLifetime) {};
 
 // TBD
+Animal* Animal::copy() {};
+Animal* Mammals::copy() {};
+Animal* Horse::copy()
+{
+    Animal *h = new Horse(this->m_color, this->m_childCount, this->m_avgLifetime, this->m_pregnancyTime, this->m_milkLiters, this->m_type);
+    return h;
+}
+Animal* Birds::copy() {};
+Animal* Flamingo::copy()
+{
+    Animal *h = new Flamingo(this->m_color, this->m_childCount, this->m_avgLifetime, this->m_incubationTime, this->m_avgHeight);
+    return h;
+}
+Animal* Fish::copy() {};
+Animal* MammalsFish::copy() {};
+Animal* GoldFish::copy()
+{
+    Animal *h = new GoldFish(this->m_color, this->m_childCount, this->m_avgLifetime, this->m_pregnancyTime, this->m_milkLiters, this->m_finCount, this->m_gillsCount, this->m_avgWeight, this->m_avgLength);
+    return h;
+}
+Animal* Mermaid::copy()
+{
+    Animal *h = new Mermaid(this->m_color, this->m_childCount, this->m_avgLifetime, this->m_pregnancyTime, this->m_milkLiters, this->m_finCount, this->m_gillsCount, this->m_firstName, this->m_lastName);
+    return h;
+}
+
 //Animal::Animal( ifstream& in_file )
 // {
 
@@ -25,7 +51,7 @@ float Animal::GetLifetime() const
 {
     return m_avgLifetime;
 };
-
+//virtual Animal Animal::copy() const {};
 //Mamal
 Mammals::Mammals() : m_milkLiters(0), m_pregnancyTime(0) {};
 
@@ -34,7 +60,7 @@ Mammals::Mammals( const char* color, int childs, float avgLifetime, float preg, 
 //TBD
 // Mammals::Mammals( ifstream& in_file )
 // {
-    
+
 // };//init the Mammals from a binary file
 
 //virtual ~Mammals::Mammals();
@@ -49,6 +75,7 @@ float Mammals::GetMilk() const
 {
     return m_milkLiters;
 };
+//virtual Animal Mammals::copy() const {};
 
 Birds::Birds() : m_incubationTime(0) {}
 
@@ -62,6 +89,7 @@ float Birds::GetIncubationTime() const
 {
     return m_incubationTime;
 };
+//virtual Animal Birds::copy() const {};
 
 Fish::Fish() : m_finCount(0), m_gillsCount(0) {};//set the default color to GRAY and other params to 0
 
@@ -78,10 +106,11 @@ int	Fish::GetGillsCount() const
 {
     return m_gillsCount;
 };
+//virtual Animal Fish::copy() const {};
 
 Horse::Horse() : m_type(NULL) {};//set the default color to GRAY and other params to 0
 
-Horse::Horse(const char* color, int childs, float avgLifetime, float preg, float milk, const char* type) : Mammals(color, childs, avgLifetime, preg, milk), m_type(_strdup(type)) {}
+Horse::Horse(const char* color, int childs, float avgLifetime, float preg, float milk, const char* type) : Mammals(color, childs, avgLifetime, preg, milk), m_type(strdup(type)) {}
 
 //Horse( ifstream& in_file );//init the Horse from a binary file
 
@@ -89,6 +118,9 @@ const char*	Horse::GetType() const
 {
     return m_type;
 };
+//virtual Animal Horse::copy() const {
+//    Animal mirror = new Horse(this.m_color, this.m_childCount, this)
+//};
 
 Flamingo::Flamingo() : m_avgHeight(0) {};//set the default color to GRAY and other params to 0
 
@@ -114,10 +146,10 @@ GoldFish::GoldFish() : m_avgWeight(0), m_avgLength(0) {};//set the default color
 GoldFish::GoldFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills) {}
 //GoldFish::GoldFish( ifstream& in_file );//init the GoldFish from a binary file
 //virtual ~GoldFish();
-	
+
 float GoldFish::GetWeight() const
 {
-    return m_avgWeight; 
+    return m_avgWeight;
 };//return the avg weight of the gold fish
 
 float GoldFish::GetLength() const
@@ -127,11 +159,11 @@ float GoldFish::GetLength() const
 
 
 Mermaid::Mermaid() : m_firstName(NULL), m_lastName(NULL) {};//set the default color to GRAY and other params to 0
-	
-Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName ) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), m_firstName(_strdup(firstName)), m_lastName(_strdup(lastName)) {}
+
+Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName ) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), m_firstName(strdup(firstName)), m_lastName(strdup(lastName)) {}
 //Mermaid( ifstream& in_file );//init the Mermaid from a binary file
 //virtual ~Mermaid();
-	
+
 const char*	Mermaid::GetFirstName() const
 {
     return m_firstName;
@@ -143,7 +175,7 @@ const char*	Mermaid::GetLastName() const
 
 
 Zoo::Zoo() : m_name(NULL), m_address(NULL), m_ticketPrice(0), m_openHours(NULL), m_closeHours(NULL), m_numOfAnimals(0), m_animals(NULL) {};//default c'tor  - all to 0 or null
-Zoo::Zoo(const char* name, const char* address, float ticket, const char* open, const char* close) : m_name(_strdup(name)), m_address(_strdup(address)), m_ticketPrice(ticket), m_openHours(_strdup(open)), m_closeHours(_strdup(close)) {}
+Zoo::Zoo(const char* name, const char* address, float ticket, const char* open, const char* close) : m_name(strdup(name)), m_address(strdup(address)), m_ticketPrice(ticket), m_openHours(strdup(open)), m_closeHours(strdup(close)), m_animals(NULL) {}
 
 // Zoo( ifstream& in_file );//c'tor that gets a binary file and loads the data of the zoo from the file
 //virtual ~Zoo();//d'tor
@@ -166,20 +198,20 @@ const char*	Zoo::GetOpenHour() const
 {
     return m_openHours;
 };//return the open hour of the zoo
-	
+
 const char*	Zoo::GetCloseHour() const
 {
-    return m_closeHours;   
+    return m_closeHours;
 };//return the close hour of the zoo
 
 int	Zoo::GetNumOfAnimals() const
 {
-    return m_numOfAnimals;   
+    return m_numOfAnimals;
 };//return the num of animals in the zoo
 
 Animal** Zoo::GetAnimals() const
 {
-    return m_animals;   
+    return m_animals;
 };//return the animals array of the zoo
 
 void Zoo::AddAnimal( Animal* an )

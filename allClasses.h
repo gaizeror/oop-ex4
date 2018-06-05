@@ -14,6 +14,7 @@ protected:
 	Animal();//set the default color to GRAY and other params to 0
 	Animal( const char* color, int childs, float avgLifetime );//init the Animal with a given attributes
 	Animal( ifstream& in_file );//init the Animal from a binary file
+	virtual Animal* copy();
 
 public:
 	//TBD
@@ -37,6 +38,9 @@ public:
 	Mammals( const char* color, int childs, float avgLifetime, float preg, float milk );//init the Mammals with a given attributes
 	Mammals( ifstream& in_file );//init the Mammals from a binary file
 //	virtual ~Mammals();
+
+protected:
+	virtual Animal* copy();
 	
 public:
 	float		GetPregnanceTime() const;//return the pregnance time of the animal
@@ -59,6 +63,9 @@ public:
 	float		GetIncubationTime() const;//return the incubation time of the animal
 
 protected:
+    virtual Animal* copy();
+
+protected:
 	float m_incubationTime;
 };
 
@@ -69,6 +76,9 @@ public:
 	Fish( const char* color, int childs, float avgLifetime, int fin, int gills );//init the Fish with a given attributes
 	Fish( ifstream& in_file );//init the Fish from a binary file
 //	virtual ~Fish();
+
+protected:
+    virtual Animal* copy();
 	
 public:
 	int		GetFinCount() const;//return the fin count of the animal
@@ -86,6 +96,7 @@ public:
 	Horse( const char* color, int childs, float avgLifetime, float preg, float milk, const char* type );//init the Horse with a given attributes
 	Horse( ifstream& in_file );//init the Horse from a binary file
 //	virtual ~Horse();
+	Animal* copy();
 	
 public:
 	const char*		GetType() const;//return the type of the horse
@@ -101,6 +112,7 @@ public:
 	Flamingo( const char* color, int childs, float avgLifetime, float incubation, float avgHeight );//init the Flamingo with a given attributes
 	Flamingo( ifstream& in_file );//init the Flamingo from a binary file
 //	virtual ~Flamingo();
+    Animal* copy();
 
 public:
 	float		GetHeight() const;//return the avg height of the flamingo
@@ -116,6 +128,9 @@ public:
 	MammalsFish( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills );//init the MammalsFish with a given attributes
 	MammalsFish( ifstream& in_file );//init the MammalsFish from a binary file
 //	virtual ~MammalsFish();
+
+protected:
+    virtual Animal* copy();
 };
 
 class GoldFish : public MammalsFish
@@ -125,6 +140,7 @@ public:
 	GoldFish( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL );//init the GoldFish with a given attributes
 	GoldFish( ifstream& in_file );//init the GoldFish from a binary file
 //	virtual ~GoldFish();
+    Animal* copy();
 	
 public:
 	float		GetWeight() const;//return the avg weight of the gold fish
@@ -142,6 +158,7 @@ public:
 	Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName );//init the Mermaid with a given attributes
 	Mermaid( ifstream& in_file );//init the Mermaid from a binary file
 //	virtual ~Mermaid();
+    Animal* copy();
 	
 public:
 	const char*		GetFirstName() const;//return the first name of the mermaid
