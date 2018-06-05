@@ -21,6 +21,10 @@ public:
     virtual Animal* copy();
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
+    void saveType(ofstream& ofs) const;
+    void saveTypeBin(ofstream& ofs) const;
+
 
 
 public:
@@ -50,6 +54,7 @@ public:
 	float		GetMilk() const;//return the milk liters of the animal
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 
 protected:
 	float m_pregnancyTime;
@@ -68,6 +73,7 @@ public:
 	float		GetIncubationTime() const;//return the incubation time of the animal
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 
 protected:
     virtual Animal* copy();
@@ -92,6 +98,7 @@ public:
 	int		GetGillsCount() const;//return the gills count of the animal
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 
 protected:
 	int m_finCount;
@@ -111,6 +118,7 @@ public:
 	const char*		GetType() const;//return the type of the horse
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 
 protected:
 	char*	m_type;
@@ -129,6 +137,7 @@ public:
 	float		GetHeight() const;//return the avg height of the flamingo
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 
 protected:
 	float m_avgHeight;
@@ -144,6 +153,7 @@ public:
 public:
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 //	virtual ~MammalsFish();
 
 protected:
@@ -164,6 +174,7 @@ public:
 	float		GetLength() const;//return the avg length of the gold fish
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 
 protected:
 	float m_avgWeight;
@@ -186,6 +197,7 @@ public:
     Animal* copy();
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    virtual void SaveBin(ofstream& ofs) const;
 protected:
 	char* m_firstName;
 	char* m_lastName;
