@@ -334,7 +334,7 @@ const char*	Mermaid::GetLastName() const
 
 
 Zoo::Zoo() : m_name(NULL), m_address(NULL), m_ticketPrice(0), m_openHours(NULL), m_closeHours(NULL), m_numOfAnimals(0), m_animals(NULL) {};//default c'tor  - all to 0 or null
-Zoo::Zoo(const char* name, const char* address, float ticket, const char* open, const char* close) : m_name(strdup(name)), m_address(strdup(address)), m_ticketPrice(ticket), m_openHours(strdup(open)), m_closeHours(strdup(close)), m_animals(NULL) {}
+Zoo::Zoo(const char* name, const char* address, float ticket, const char* open, const char* close) : m_name(strdup(name)), m_address(strdup(address)), m_ticketPrice(ticket), m_openHours(strdup(open)), m_closeHours(strdup(close)), m_numOfAnimals(0), m_animals(NULL) {}
 
 // Zoo( ifstream& in_file );//c'tor that gets a binary file and loads the data of the zoo from the file
 //virtual ~Zoo();//d'tor
@@ -375,17 +375,27 @@ Animal** Zoo::GetAnimals() const
 
 void Zoo::AddAnimal( Animal* an )
 {
-    m_animals = (Animal**)realloc(m_animals, (m_numOfAnimals+1)*sizeof(Animal));
-    Animal* newAnimal = an->copy();
-    m_animals[m_numOfAnimals] = newAnimal;
+    if (m_animals == NULL) {
+        m_animals = (Animal**)calloc(1, sizeof(Animal));
+        if (m_animals == NULL) {
+            return;
+        }
+    }
+    else {
+        m_animals = (Animal**)realloc(m_animals, (m_numOfAnimals+1)*sizeof(Animal));
+    }
+    m_animals[m_numOfAnimals] = (Animal*)calloc(1, sizeof(Animal));
+    m_animals[m_numOfAnimals] =  an->copy();
 	m_numOfAnimals++;
 };//creates a copy of "an" (deep copy) and adds an animal to the array
 
 //public:
 Zoo& Zoo::operator+( Animal* an ){
     m_animals = (Animal**)realloc(m_animals, (m_numOfAnimals+1)*sizeof(Animal));
+    m_animals[m_numOfAnimals] = (Animal*)calloc(1, sizeof(Animal));
     m_animals[m_numOfAnimals] = an;
     m_numOfAnimals++;
+    return *this;
 };//adds an animal (only pointer, no copy needed) to the class and returns this with the change
 Zoo Zoo::operator+( const Zoo& other ) const{
     Zoo* newZoo = new Zoo(this->m_name, this->m_address, m_ticketPrice, this->m_openHours, this->m_closeHours);
@@ -396,6 +406,7 @@ Zoo Zoo::operator+( const Zoo& other ) const{
     for (unsigned i = 0; i < sizeof(otherAnimals); i++){
         newZoo->AddAnimal(otherAnimals[i]);
     }
+    return *newZoo;
 
 }; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
 Zoo& Zoo::operator+=( Animal* an ){
