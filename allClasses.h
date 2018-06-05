@@ -15,13 +15,13 @@ protected:
 	Animal( const char* color, int childs, float avgLifetime );//init the Animal with a given attributes
 	Animal( ifstream& in_file );//init the Animal from a binary file
 
-
 public:
 	//TBD
 //	virtual ~Animal();
     virtual Animal* copy();
 
 public:
+    void Save( ofstream& ofs);
 	const char* GetColor() const;//return the color of the animal
 	int			GetChildCount() const;//return the child count of the animal
 	float		GetLifetime() const;//return the life time of the animal
@@ -42,6 +42,7 @@ public:
 
 protected:
 	virtual Animal* copy();
+    void Save( ofstream& ofs);
 	
 public:
 	float		GetPregnanceTime() const;//return the pregnance time of the animal
@@ -65,6 +66,7 @@ public:
 
 protected:
     virtual Animal* copy();
+    void Save( ofstream& ofs);
 
 protected:
 	float m_incubationTime;
@@ -80,6 +82,7 @@ public:
 
 protected:
     virtual Animal* copy();
+    void Save( ofstream& ofs);
 	
 public:
 	int		GetFinCount() const;//return the fin count of the animal
@@ -101,6 +104,7 @@ public:
 	
 public:
 	const char*		GetType() const;//return the type of the horse
+    void Save( ofstream& ofs);
 
 protected:
 	char*	m_type;
@@ -117,6 +121,7 @@ public:
 
 public:
 	float		GetHeight() const;//return the avg height of the flamingo
+    void Save( ofstream& ofs);
 
 protected:
 	float m_avgHeight;
@@ -132,6 +137,7 @@ public:
 
 protected:
     virtual Animal* copy();
+    virtual void Save( ofstream& ofs);
 };
 
 class GoldFish : public MammalsFish
@@ -146,6 +152,7 @@ public:
 public:
 	float		GetWeight() const;//return the avg weight of the gold fish
 	float		GetLength() const;//return the avg length of the gold fish
+    void Save( ofstream& ofs);
 
 protected:
 	float m_avgWeight;
@@ -164,6 +171,7 @@ public:
 public:
 	const char*		GetFirstName() const;//return the first name of the mermaid
 	const char*		GetLastName() const;//return the last name of the mermaid
+    void Save( ofstream& ofs);
 
 protected:
 	char* m_firstName;
