@@ -113,7 +113,7 @@ void Mammals::Save(ofstream &ofs) {
 }
 void Mammals::Load(ifstream& ifs)
 {
-    Animal::Load(ofs);
+    Animal::Load(ifs);
     ifs >> m_pregnancyTime >> m_milkLiters;
 }
 
@@ -491,3 +491,14 @@ void Zoo::SaveBin(ofstream& ofs) const
 
     SaveAnimalsBin( ofs );
 };//method to save the info to a binary file
+ofstream& operator<<( ofstream& out, const Zoo& z )
+{
+    z.Save(out);
+    return out;
+};
+ifstream& operator>>( ifstream& ifs, Zoo& z )
+{
+    z.Load( ifs );
+
+    return ifs;
+}

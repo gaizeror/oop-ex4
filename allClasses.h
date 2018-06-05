@@ -236,6 +236,7 @@ public:
 	void Load( ifstream& ifs );//method to load the info from a text file
 	void SaveBin( ofstream& ofs ) const;//method to save the info to a binary file
 
+
 private:
     void SaveAnimals( ofstream& ofs ) const;
     void LoadAnimals ( ifstream& is );
