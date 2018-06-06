@@ -44,19 +44,19 @@ Animal* Mermaid::copy()
 //virtual Animal::~Animal();
 void Animal::saveType(ofstream& ofs) const
 {
-    ofs << *(typeid(*this).name() + 6) << " ";
+    ofs << *(typeid(*this).name() + 1) << "\n";
 }
 void Animal::saveTypeBin(ofstream& ofs) const
 {
     char type[2];
-    strncpy(type, typeid(*this).name() + 6, 2);
+    strncpy(type, typeid(*this).name() + 1, 2);
     ofs.write((const char*)type, 2);
 }
 void Animal::Save(ofstream& ofs) {
     saveType( ofs );
-    ofs << m_color << " ";
-    ofs << m_childCount << " ";
-    ofs << m_avgLifetime << " ";
+    ofs << m_color << "\n";
+    ofs << m_childCount << "\n";
+    ofs << m_avgLifetime << "\n";
 }
 void Animal::SaveBin(ofstream& ofs) const
 {
@@ -108,8 +108,8 @@ void Mammals::SaveBin(ofstream& ofs) const
 }
 void Mammals::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_pregnancyTime << " ";
-    ofs << m_milkLiters << " ";
+    ofs << m_pregnancyTime << "\n";
+    ofs << m_milkLiters << "\n";
 }
 void Mammals::Load(ifstream& ifs)
 {
@@ -145,7 +145,7 @@ void Birds::SaveBin(ofstream& ofs) const
 }
 void Birds::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_incubationTime << " ";
+    ofs << m_incubationTime << "\n";
 }
 void Birds::Load(ifstream& ifs)
 {
@@ -174,8 +174,8 @@ void Fish::SaveBin(ofstream& ofs) const
 }
 void Fish::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_finCount << " ";
-    ofs << m_gillsCount << " ";
+    ofs << m_finCount << "\n";
+    ofs << m_gillsCount << "\n";
 }
 void Fish::Load(ifstream& ifs)
 {
@@ -193,9 +193,9 @@ int	Fish::GetGillsCount() const
 };
 //virtual Animal Fish::copy() const {};
 
-Horse::Horse() : m_type(NULL) {};//set the default color to GRAY and other params to 0
+Horse::Horse() : Mammals(), m_type(NULL) {};//set the default color to GRAY and other params to 0
 
-Horse::Horse(const char* color, int childs, float avgLifetime, float preg, float milk, const char* type) : Mammals(color, childs, avgLifetime, preg, milk), m_type(strdup(type)) {}
+Horse::Horse(const char* color, int childs, float avgLifetime, float preg, float milk, const char* type) : Mammals(color, childs, avgLifetime, preg, milk), Animal(color,childs,avgLifetime), m_type(strdup(type)) {}
 
 Horse::Horse(ifstream& in_file): Mammals(in_file) {
     in_file.read((char*)&m_type, sizeof(m_type));
@@ -208,7 +208,7 @@ void Horse::SaveBin(ofstream& ofs) const
 
 void Horse::Save(ofstream &ofs) {
     Mammals::Save(ofs);
-    ofs << m_type << " ";
+    ofs << m_type << "\n";
 }
 void Horse::Load(ifstream& ifs)
 {
@@ -240,7 +240,7 @@ void Flamingo::SaveBin(ofstream& ofs) const
 }
 void Flamingo::Save(ofstream &ofs) {
     Birds::Save(ofs);
-    ofs << m_avgHeight << " ";
+    ofs << m_avgHeight << "\n";
 }
 void Flamingo::Load(ifstream& ifs)
 {
@@ -270,7 +270,7 @@ void MammalsFish::Save(ofstream &ofs) {
 void MammalsFish::Load(ifstream& ifs) {};
 
 GoldFish::GoldFish() : m_avgWeight(0), m_avgLength(0) {};//set the default color to GRAY and other params to 0
-GoldFish::GoldFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills) {}
+GoldFish::GoldFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_avgWeight(avgW), m_avgLength(avgL) {}
 //GoldFish::GoldFish( ifstream& in_file );//init the GoldFish from a binary file
 //virtual ~GoldFish();
 
@@ -282,8 +282,8 @@ void GoldFish::SaveBin(ofstream& ofs) const
 }
 void GoldFish::Save(ofstream &ofs) {
     MammalsFish::Save(ofs);
-    ofs << m_avgWeight << " ";
-    ofs << m_avgLength << " ";
+    ofs << m_avgWeight << "\n";
+    ofs << m_avgLength << "\n";
 }
 void GoldFish::Load(ifstream& ifs)
 {
@@ -301,9 +301,9 @@ float GoldFish::GetLength() const
 };
 
 
-Mermaid::Mermaid() : m_firstName(NULL), m_lastName(NULL) {};//set the default color to GRAY and other params to 0
+Mermaid::Mermaid() : MammalsFish(), m_firstName(NULL), m_lastName(NULL) {};//set the default color to GRAY and other params to 0
 
-Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName ) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), m_firstName(strdup(firstName)), m_lastName(strdup(lastName)) {}
+Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName ) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_firstName(strdup(firstName)), m_lastName(strdup(lastName)) {}
 //Mermaid( ifstream& in_file );//init the Mermaid from a binary file
 //virtual ~Mermaid();
 
@@ -315,8 +315,8 @@ void Mermaid::SaveBin(ofstream& ofs) const
 }
 void Mermaid::Save(ofstream &ofs) {
     MammalsFish::Save(ofs);
-    ofs << m_firstName << " ";
-    ofs << m_lastName << " ";
+    ofs << m_firstName << "\n";
+    ofs << m_lastName << "\n";
 }
 void Mermaid::Load(ifstream& ifs)
 {
@@ -420,11 +420,11 @@ Zoo& Zoo::operator+=( Animal* an ){
 //
 //public:
 void Zoo::Save( ofstream& ofs ) const{
-    ofs << m_name << " ";
-    ofs << m_address << " ";
-    ofs << m_ticketPrice << " ";
-    ofs << m_openHours << " ";
-    ofs << m_closeHours << " ";
+    ofs << m_name << "\n";
+    ofs << m_address << "\n";
+    ofs << m_ticketPrice << "\n";
+    ofs << m_openHours << "\n";
+    ofs << m_closeHours << "\n";
 
     SaveAnimals(ofs);
 };//method to save the info to a text file

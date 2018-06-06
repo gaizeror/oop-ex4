@@ -61,7 +61,7 @@ protected:
 	float m_milkLiters;
 };
 
-class Birds : public Animal
+class Birds : virtual public Animal
 {
 public:
 	Birds();//set the default color to GRAY and other params to 0
@@ -143,7 +143,7 @@ protected:
 	float m_avgHeight;
 };
 
-class MammalsFish : public Mammals, public Fish
+class MammalsFish : virtual public Mammals, virtual public Fish
 {
 public:
 	MammalsFish();//set the default color to GRAY and other params to 0
@@ -160,7 +160,7 @@ protected:
     virtual Animal* copy();
 };
 
-class GoldFish : public MammalsFish
+class GoldFish : virtual public MammalsFish
 {
 public:
 	GoldFish();//set the default color to GRAY and other params to 0

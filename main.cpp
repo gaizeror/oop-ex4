@@ -1,7 +1,10 @@
-#include <iostream>
 #include "allClasses.h"
 
-int main() {
+using namespace std;
+
+//Train
+int main()
+{
     //section 1 - create a zoo and save to file output.txt
     Zoo z1( "Zoological Center Tel Aviv Ramat Gan Safari Israel", "1 Hatzvi Ave, Ramat Gan", 90, "8:00", "20:00" );
 
@@ -49,27 +52,27 @@ int main() {
     OutFile3.close();
 
     //section 4 - load the zoo from the saved txt file
-    Zoo z4;
-    ifstream InFile1( "output1.txt" );
-
-    if( !InFile1.is_open() )
-    {
-        cout << "Error opening output1.txt!\n";
-        return 0;
-    }
-
-    InFile1 >> z4;
-    InFile1.close();
-
-//    //section 5 - load the zoo from the saved txt file
-    Zoo z5;
-    ifstream InFile2( "output2.txt" );
+//    Zoo z4;
+//    ifstream InFile1( "output1.txt" );
 //
-    if( !InFile2.is_open() )
-    {
-        cout << "Error opening output2.txt!\n";
-        return 0;
-    }
+//    if( !InFile1.is_open() )
+//    {
+//        cout << "Error opening output1.txt!\n";
+//        return 0;
+//    }
+//
+//    InFile1 >> z4;
+//    InFile1.close();
+//
+//    //section 5 - load the zoo from the saved txt file
+//    Zoo z5;
+//    ifstream InFile2( "output2.txt" );
+//
+//    if( !InFile2.is_open() )
+//    {
+//        cout << "Error opening output2.txt!\n";
+//        return 0;
+//    }
 //
 //    InFile2 >> z5;
 //    InFile2.close();
@@ -112,12 +115,19 @@ int main() {
 //    if( 4 != z3.GetNumOfAnimals() )
 //        cout << "Zoo number of animals is wrong after merging 2 zoos (-10)" << endl;
 //
+//    Flamingo* f2 = dynamic_cast<Flamingo*>( z3.GetAnimals()[0] );
+//    if( NULL == f2 )
+//        cout << "Zoo animals order is wrong after merging 2 zoos (-10)" << endl;
+//
 //    if( 0 != strcmp( z6.GetOpenHour(), "9:00" ) )
 //        cout << "Zoo open hour is wrong after loading form bin file (-10)" << endl;
-
-    //finished
-    cout << "done" << endl;
-
-    return 0;
-
+//
+//    Horse* h2 = dynamic_cast<Horse*>( z3.GetAnimals()[1] );
+//    if( NULL == h2 )
+//        cout << "Zoo animals order is wrong after loading from bin file (-10)" << endl;
+//
+//    //finished
+//    cout << "done" << endl;
+//
+//    return 0;
 }
