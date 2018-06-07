@@ -44,7 +44,12 @@ Animal* Mermaid::copy()
 //virtual Animal::~Animal();
 void Animal::saveType(ofstream& ofs) const
 {
-    ofs << *(typeid(*this).name() + 1) << "\n";
+    string type;
+    string returnedType = typeid(*this).name();
+    for (int i=1; i < returnedType.length(); i++){
+        type.push_back(returnedType[i]);
+    }
+    ofs << type << endl;
 }
 void Animal::saveTypeBin(ofstream& ofs) const
 {
@@ -54,9 +59,9 @@ void Animal::saveTypeBin(ofstream& ofs) const
 }
 void Animal::Save(ofstream& ofs) {
     saveType( ofs );
-    ofs << m_color << "\n";
-    ofs << m_childCount << "\n";
-    ofs << m_avgLifetime << "\n";
+    ofs << m_color << endl;
+    ofs << m_childCount << endl;
+    ofs << m_avgLifetime << endl;
 }
 void Animal::SaveBin(ofstream& ofs) const
 {
@@ -108,8 +113,8 @@ void Mammals::SaveBin(ofstream& ofs) const
 }
 void Mammals::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_pregnancyTime << "\n";
-    ofs << m_milkLiters << "\n";
+    ofs << m_pregnancyTime << endl;
+    ofs << m_milkLiters << endl;
 }
 void Mammals::Load(ifstream& ifs)
 {
@@ -145,7 +150,7 @@ void Birds::SaveBin(ofstream& ofs) const
 }
 void Birds::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_incubationTime << "\n";
+    ofs << m_incubationTime << endl;
 }
 void Birds::Load(ifstream& ifs)
 {
@@ -174,8 +179,8 @@ void Fish::SaveBin(ofstream& ofs) const
 }
 void Fish::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_finCount << "\n";
-    ofs << m_gillsCount << "\n";
+    ofs << m_finCount << endl;
+    ofs << m_gillsCount << endl;
 }
 void Fish::Load(ifstream& ifs)
 {
@@ -208,7 +213,7 @@ void Horse::SaveBin(ofstream& ofs) const
 
 void Horse::Save(ofstream &ofs) {
     Mammals::Save(ofs);
-    ofs << m_type << "\n";
+    ofs << m_type << endl;
 }
 void Horse::Load(ifstream& ifs)
 {
@@ -240,7 +245,7 @@ void Flamingo::SaveBin(ofstream& ofs) const
 }
 void Flamingo::Save(ofstream &ofs) {
     Birds::Save(ofs);
-    ofs << m_avgHeight << "\n";
+    ofs << m_avgHeight << endl;
 }
 void Flamingo::Load(ifstream& ifs)
 {
@@ -282,8 +287,8 @@ void GoldFish::SaveBin(ofstream& ofs) const
 }
 void GoldFish::Save(ofstream &ofs) {
     MammalsFish::Save(ofs);
-    ofs << m_avgWeight << "\n";
-    ofs << m_avgLength << "\n";
+    ofs << m_avgWeight << endl;
+    ofs << m_avgLength << endl;
 }
 void GoldFish::Load(ifstream& ifs)
 {
@@ -315,8 +320,8 @@ void Mermaid::SaveBin(ofstream& ofs) const
 }
 void Mermaid::Save(ofstream &ofs) {
     MammalsFish::Save(ofs);
-    ofs << m_firstName << "\n";
-    ofs << m_lastName << "\n";
+    ofs << m_firstName << endl;
+    ofs << m_lastName << endl;
 }
 void Mermaid::Load(ifstream& ifs)
 {
@@ -420,11 +425,11 @@ Zoo& Zoo::operator+=( Animal* an ){
 //
 //public:
 void Zoo::Save( ofstream& ofs ) const{
-    ofs << m_name << "\n";
-    ofs << m_address << "\n";
-    ofs << m_ticketPrice << "\n";
-    ofs << m_openHours << "\n";
-    ofs << m_closeHours << "\n";
+    ofs << m_name << endl;
+    ofs << m_address << endl;
+    ofs << m_ticketPrice << endl;
+    ofs << m_openHours << endl;
+    ofs << m_closeHours << endl;
 
     SaveAnimals(ofs);
 };//method to save the info to a text file

@@ -52,17 +52,17 @@ int main()
     OutFile3.close();
 
     //section 4 - load the zoo from the saved txt file
-//    Zoo z4;
-//    ifstream InFile1( "output1.txt" );
-//
-//    if( !InFile1.is_open() )
-//    {
-//        cout << "Error opening output1.txt!\n";
-//        return 0;
-//    }
-//
-//    InFile1 >> z4;
-//    InFile1.close();
+    Zoo z4;
+    ifstream InFile1( "output1.txt" );
+
+    if( !InFile1.is_open() )
+    {
+        cout << "Error opening output1.txt!\n";
+        return 0;
+    }
+
+    InFile1 >> z4;
+    InFile1.close();
 //
 //    //section 5 - load the zoo from the saved txt file
 //    Zoo z5;
