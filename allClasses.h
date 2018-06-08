@@ -70,7 +70,7 @@ public:
 //	virtual ~Birds();
 	
 public:
-	float		GetIncubationTime() const;//return the incubation time of the animal
+	float GetIncubationTime() const;//return the incubation time of the animal
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
     virtual void SaveBin(ofstream& ofs) const;

@@ -228,11 +228,16 @@ void Horse::Save(ofstream &ofs) {
 void Horse::Load(ifstream& ifs)
 {
     Mammals::Load(ifs);
+
     char temp[256] = {0};
     ifs.getline(temp, 256, '\n');
 
-    m_type = new char[strlen(temp) + 1];
-    strcpy(m_type, temp);
+
+    char type[256] = {0};
+    ifs.getline(type, 256, '\n');
+
+    m_type = new char[strlen(type) + 1];
+    strcpy(m_type, type);
 }
 const char*	Horse::GetType() const
 {
@@ -286,7 +291,11 @@ void MammalsFish::Save(ofstream &ofs) {
     Mammals::Save(ofs);
     Fish::Save(ofs);
 };
-void MammalsFish::Load(ifstream& ifs) {};
+void MammalsFish::Load(ifstream& ifs) {
+    Mammals::Load(ifs);
+    Fish::Load(ifs);
+
+};
 
 GoldFish::GoldFish() : m_avgWeight(0), m_avgLength(0) {};//set the default color to GRAY and other params to 0
 GoldFish::GoldFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_avgWeight(avgW), m_avgLength(avgL) {}
@@ -538,6 +547,9 @@ void Zoo::LoadAnimals(ifstream& is) {
     clear(); // first clear old content.
 
     is >> m_numOfAnimals;
+
+    char temp[256] = {0};
+    is.getline(temp, 256, '\n');
 
     // allocate memory for products.
     m_animals = new Animal*[m_numOfAnimals];
