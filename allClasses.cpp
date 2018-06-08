@@ -49,7 +49,7 @@ void Animal::saveType(ofstream& ofs) const
     for (int i=1; i < returnedType.length(); i++){
         type.push_back(returnedType[i]);
     }
-    ofs << type << endl;
+    ofs << "\n" << type ;
 }
 void Animal::saveTypeBin(ofstream& ofs) const
 {
@@ -59,9 +59,9 @@ void Animal::saveTypeBin(ofstream& ofs) const
 }
 void Animal::Save(ofstream& ofs) {
     saveType( ofs );
-    ofs << m_color << endl;
-    ofs << m_childCount << endl;
-    ofs << m_avgLifetime << endl;
+    ofs << "\n" << m_color;
+    ofs << "\n" << m_childCount ;
+    ofs << "\n" << m_avgLifetime ;
 }
 void Animal::SaveBin(ofstream& ofs) const
 {
@@ -113,8 +113,8 @@ void Mammals::SaveBin(ofstream& ofs) const
 }
 void Mammals::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_pregnancyTime << endl;
-    ofs << m_milkLiters << endl;
+    ofs << "\n" << m_pregnancyTime ;
+    ofs << "\n" << m_milkLiters ;
 }
 void Mammals::Load(ifstream& ifs)
 {
@@ -150,7 +150,7 @@ void Birds::SaveBin(ofstream& ofs) const
 }
 void Birds::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_incubationTime << endl;
+    ofs << "\n" << m_incubationTime ;
 }
 void Birds::Load(ifstream& ifs)
 {
@@ -179,8 +179,8 @@ void Fish::SaveBin(ofstream& ofs) const
 }
 void Fish::Save(ofstream &ofs) {
     Animal::Save(ofs);
-    ofs << m_finCount << endl;
-    ofs << m_gillsCount << endl;
+    ofs << "\n" << m_finCount ;
+    ofs << "\n" << m_gillsCount ;
 }
 void Fish::Load(ifstream& ifs)
 {
@@ -213,7 +213,7 @@ void Horse::SaveBin(ofstream& ofs) const
 
 void Horse::Save(ofstream &ofs) {
     Mammals::Save(ofs);
-    ofs << m_type << endl;
+    ofs << "\n" << m_type ;
 }
 void Horse::Load(ifstream& ifs)
 {
@@ -231,7 +231,7 @@ const char*	Horse::GetType() const
 Flamingo::Flamingo() : m_avgHeight(0) {};//set the default color to GRAY and other params to 0
 
 
-Flamingo::Flamingo(const char* color, int childs, float avgLifetime, float incubation, float avgHeight) : Birds(color, childs, avgLifetime, incubation), m_avgHeight(avgHeight) {}
+Flamingo::Flamingo(const char* color, int childs, float avgLifetime, float incubation, float avgHeight) : Birds(color, childs, avgLifetime, incubation), Animal(color, childs, avgLifetime), m_avgHeight(avgHeight) {}
 
 Flamingo::Flamingo(ifstream& in_file): Birds(in_file) {
     in_file.read((char*)&m_avgHeight, sizeof(m_avgHeight));
@@ -245,7 +245,7 @@ void Flamingo::SaveBin(ofstream& ofs) const
 }
 void Flamingo::Save(ofstream &ofs) {
     Birds::Save(ofs);
-    ofs << m_avgHeight << endl;
+    ofs << "\n" << m_avgHeight ;
 }
 void Flamingo::Load(ifstream& ifs)
 {
@@ -287,8 +287,8 @@ void GoldFish::SaveBin(ofstream& ofs) const
 }
 void GoldFish::Save(ofstream &ofs) {
     MammalsFish::Save(ofs);
-    ofs << m_avgWeight << endl;
-    ofs << m_avgLength << endl;
+    ofs << "\n" << m_avgWeight ;
+    ofs << "\n" << m_avgLength ;
 }
 void GoldFish::Load(ifstream& ifs)
 {
@@ -320,8 +320,8 @@ void Mermaid::SaveBin(ofstream& ofs) const
 }
 void Mermaid::Save(ofstream &ofs) {
     MammalsFish::Save(ofs);
-    ofs << m_firstName << endl;
-    ofs << m_lastName << endl;
+    ofs << "\n" << m_firstName ;
+    ofs << "\n" << m_lastName ;
 }
 void Mermaid::Load(ifstream& ifs)
 {
@@ -425,17 +425,17 @@ Zoo& Zoo::operator+=( Animal* an ){
 //
 //public:
 void Zoo::Save( ofstream& ofs ) const{
-    ofs << m_name << endl;
-    ofs << m_address << endl;
-    ofs << m_ticketPrice << endl;
-    ofs << m_openHours << endl;
-    ofs << m_closeHours << endl;
+    ofs << m_name ;
+    ofs << "\n" << m_address ;
+    ofs << "\n" << m_ticketPrice ;
+    ofs << "\n" << m_openHours ;
+    ofs << "\n" << m_closeHours ;
 
     SaveAnimals(ofs);
 };//method to save the info to a text file
 
 void Zoo::SaveAnimals(ofstream &ofs) const {
-    ofs << m_numOfAnimals << endl;
+    ofs << "\n" << m_numOfAnimals ;
 
     for( unsigned int i = 0; i < m_numOfAnimals; ++i )
     {
