@@ -75,7 +75,7 @@ void Animal::Load(ifstream& ifs)
     char temp[256] = {0};
     ifs.getline(temp, 256, '\n');
 
-    char* m_color = new char[strlen(temp) + 1];
+    m_color = new char[strlen(temp) + 1];
 
     strcpy(m_color,temp);
 
@@ -231,7 +231,7 @@ void Horse::Load(ifstream& ifs)
     char temp[256] = {0};
     ifs.getline(temp, 256, '\n');
 
-    char* m_type = new char[strlen(temp) + 1];
+    m_type = new char[strlen(temp) + 1];
     strcpy(m_type, temp);
 }
 const char*	Horse::GetType() const
@@ -344,13 +344,13 @@ void Mermaid::Load(ifstream& ifs)
     char temp[256] = {0};
     ifs.getline(temp, 256, '\n');
 
-    char* m_firstName = new char[strlen(temp) + 1];
+    m_firstName = new char[strlen(temp) + 1];
     strcpy(m_firstName, temp);
 
     char temp2[256] = {0};
     ifs.getline(temp2, 256, '\n');
 
-    char* m_lastName = new char[strlen(temp2) + 1];
+    m_lastName = new char[strlen(temp2) + 1];
     strcpy(m_lastName, temp2);
 }
 const char*	Mermaid::GetFirstName() const
@@ -502,30 +502,33 @@ void Zoo::Load( ifstream& ifs ){
     char temp[256] = {0};
     ifs.getline(temp, 256, '\n');
 
-    char* m_name = new char[strlen(temp) + 1];
+    m_name = new char[strlen(temp) + 1];
 
     strcpy(m_name,temp);
 
     char temp2[256] = {0};
     ifs.getline(temp2, 256, '\n');
 
-    char* m_address = new char[strlen(temp2) + 1];
+    m_address = new char[strlen(temp2) + 1];
 
     strcpy(m_address,temp2);
 
     ifs >> m_ticketPrice;
 
+    char temp7[256] = {0};
+    ifs.getline(temp7, 256, '\n');
+
     char temp3[256] = {0};
     ifs.getline(temp3, 256, '\n');
 
-    char* m_openHours = new char[strlen(temp3) + 1];
+    m_openHours = new char[strlen(temp3) + 1];
 
     strcpy(m_openHours,temp3);
 
     char temp4[256] = {0};
     ifs.getline(temp4, 256, '\n');
 
-    char* m_closeHours = new char[strlen(temp4) + 1];
+    m_closeHours = new char[strlen(temp4) + 1];
 
     strcpy(m_closeHours,temp4);
 
