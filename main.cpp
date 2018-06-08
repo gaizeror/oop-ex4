@@ -61,21 +61,21 @@ int main()
         return 0;
     }
 
-//    InFile1 >> z4;
-//    InFile1.close();
+    InFile1 >> z4;
+    InFile1.close();
 //
 //    //section 5 - load the zoo from the saved txt file
-    Zoo z5;
-    ifstream InFile2( "output2.txt" );
-
-    if( !InFile2.is_open() )
-    {
-        cout << "Error opening output2.txt!\n";
-        return 0;
-    }
-
-    InFile2 >> z5;
-    InFile2.close();
+//    Zoo z5;
+//    ifstream InFile2( "output2.txt" );
+//
+//    if( !InFile2.is_open() )
+//    {
+//        cout << "Error opening output2.txt!\n";
+//        return 0;
+//    }
+//
+//    InFile2 >> z5;
+//    InFile2.close();
 //
 //    //section 6 - load the zoo from the saved bin file
 //    ifstream InFile3( "output3.dat", ios::in | ios::binary );

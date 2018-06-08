@@ -72,7 +72,15 @@ void Animal::SaveBin(ofstream& ofs) const
 }
 void Animal::Load(ifstream& ifs)
 {
-    ifs >> m_color >> m_childCount >> m_avgLifetime;
+    char temp[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_color = new char[strlen(temp) + 1];
+
+    strcpy(m_color,temp);
+
+    ifs >> m_childCount;
+    ifs >> m_avgLifetime;
 }
 
 const char* Animal::GetColor() const
@@ -119,7 +127,8 @@ void Mammals::Save(ofstream &ofs) {
 void Mammals::Load(ifstream& ifs)
 {
     Animal::Load(ifs);
-    ifs >> m_pregnancyTime >> m_milkLiters;
+    ifs >> m_pregnancyTime;
+    ifs >> m_milkLiters;
 }
 
 float Mammals::GetPregnanceTime() const
@@ -185,7 +194,8 @@ void Fish::Save(ofstream &ofs) {
 void Fish::Load(ifstream& ifs)
 {
     Animal::Load(ifs);
-    ifs >> m_finCount >> m_gillsCount;
+    ifs >> m_finCount ;
+    ifs >> m_gillsCount;
 }
 int	Fish::GetFinCount() const
 {
@@ -218,7 +228,11 @@ void Horse::Save(ofstream &ofs) {
 void Horse::Load(ifstream& ifs)
 {
     Mammals::Load(ifs);
-    ifs >> m_type;
+    char temp[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_type = new char[strlen(temp) + 1];
+    strcpy(m_type, temp);
 }
 const char*	Horse::GetType() const
 {
@@ -293,7 +307,8 @@ void GoldFish::Save(ofstream &ofs) {
 void GoldFish::Load(ifstream& ifs)
 {
     MammalsFish::Load(ifs);
-    ifs >> m_avgWeight >> m_avgLength;
+    ifs >> m_avgWeight;
+    ifs >> m_avgLength;
 }
 float GoldFish::GetWeight() const
 {
@@ -326,7 +341,16 @@ void Mermaid::Save(ofstream &ofs) {
 void Mermaid::Load(ifstream& ifs)
 {
     MammalsFish::Load(ifs);
-    ifs >> m_firstName >> m_lastName;
+    char temp[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_firstName = new char[strlen(temp) + 1];
+    strcpy(m_firstName, temp);
+    char temp2[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_lastName = new char[strlen(temp) + 1];
+    strcpy(m_lastName, temp);
 }
 const char*	Mermaid::GetFirstName() const
 {
@@ -455,9 +479,12 @@ void Zoo::clear() {
 }
 Animal* Zoo::CreateAnimal(ifstream& is)
 {
-    char* animalType;
+    char temp[256] = {0};
+    is.getline(temp, 256, '\n');
 
-    is >> animalType;
+    char* animalType = new char[strlen(temp) + 1];
+
+    strcpy(animalType, temp);
 
     if( strcmp(animalType, "Horse" ) == 0)
         return new Horse;
@@ -470,11 +497,39 @@ Animal* Zoo::CreateAnimal(ifstream& is)
     else return NULL;
 }
 void Zoo::Load( ifstream& ifs ){
-    ifs >> m_name >> m_address >> m_ticketPrice>> m_openHours >> m_closeHours;
+
+    char temp[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_name = new char[strlen(temp) + 1];
+
+    strcpy(m_name,temp);
+
+    char temp2[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_address = new char[strlen(temp) + 1];
+
+    strcpy(m_address,temp);
+    ifs >> m_ticketPrice;
+
+    char temp3[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_openHours = new char[strlen(temp) + 1];
+
+    strcpy(m_openHours,temp);
+
+    char temp4[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
+    char* m_closeHours = new char[strlen(temp) + 1];
+
+    strcpy(m_closeHours,temp);
 
     LoadAnimals( ifs );
 };//method to load the info from a text file
-void Zoo::LoadAnimals(ifstream &is) {
+void Zoo::LoadAnimals(ifstream& is) {
     clear(); // first clear old content.
 
     is >> m_numOfAnimals;
@@ -516,7 +571,7 @@ ofstream& operator<<( ofstream& out, const Zoo& z )
     z.Save(out);
     return out;
 };
-ifstream& operator>>( ifstream& in, Zoo& z )
+ifstream& operator>>(ifstream& in, Zoo& z )
 {
     z.Load( in );
     return in;
