@@ -334,7 +334,7 @@ float GoldFish::GetLength() const
 Mermaid::Mermaid() : MammalsFish(), m_firstName(NULL), m_lastName(NULL) {};//set the default color to GRAY and other params to 0
 
 Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName ) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_firstName(strdup(firstName)), m_lastName(strdup(lastName)) {}
-Mermaid(ifstream& ifs) : MammalsFish(ifs) {};//init the Mermaid from a binary file
+Mermaid::Mermaid(ifstream& ifs) : MammalsFish(ifs) {};//init the Mermaid from a binary file
 //virtual ~Mermaid();
 
 void Mermaid::SaveBin(ofstream& ofs) const
