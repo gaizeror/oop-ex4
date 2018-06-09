@@ -39,7 +39,17 @@ int main()
     //section 3 - use more operators
     Zoo z3 = z2 + z1;
     GoldFish* gf = new GoldFish( "GOLD", 5, 1, 3, 2, 100, 3, 0.3f, 0.7f );
+
     z3 += gf;
+    ofstream OutFile5( "output5.txt" );
+    if( !OutFile5.is_open() )
+    {
+        cout << "Error opening output2.txt!\n";
+        return 0;
+    }
+
+    OutFile5 << z3;
+    OutFile5.close();
 
     ofstream OutFile3( "output3.dat", ios::out | ios::binary | ios::trunc );
     if( !OutFile3.is_open() )
@@ -87,7 +97,7 @@ int main()
     }
 
     Zoo z6( InFile3 );
-//    InFile3.close();
+    InFile3.close();
 //
 //    //now we test
 //    //part 1
@@ -119,15 +129,15 @@ int main()
     if( NULL == f2 )
         cout << "Zoo animals order is wrong after merging 2 zoos (-10)" << endl;
 
-//    if( 0 != strcmp( z6.GetOpenHour(), "9:00" ) )
-//        cout << "Zoo open hour is wrong after loading form bin file (-10)" << endl;
-//
-//    Horse* h2 = dynamic_cast<Horse*>( z3.GetAnimals()[1] );
-//    if( NULL == h2 )
-//        cout << "Zoo animals order is wrong after loading from bin file (-10)" << endl;
-//
-//    //finished
-//    cout << "done" << endl;
-//
-//    return 0;
+    if( 0 != strcmp( z6.GetOpenHour(), "9:00" ) )
+        cout << "Zoo open hour is wrong after loading form bin file (-10)" << endl;
+
+    Horse* h2 = dynamic_cast<Horse*>( z3.GetAnimals()[1] );
+    if( NULL == h2 )
+        cout << "Zoo animals order is wrong after loading from bin file (-10)" << endl;
+
+    //finished
+    cout << "done" << endl;
+
+    return 0;
 }

@@ -3,7 +3,7 @@
 using namespace std;
 
 //Animal
-Animal::Animal() : m_color("GRAY"), m_childCount(0), m_avgLifetime(0) {};
+Animal::Animal() : m_color((char*)"GRAY"), m_childCount(0), m_avgLifetime(0) {};
 Animal::Animal( const char* color, int childs, float avgLifetime ) :  m_color(strdup(color)), m_childCount(childs), m_avgLifetime(avgLifetime) {};
 Animal::Animal(ifstream& in_file) {
     in_file.read((char*)&m_color, sizeof(m_color));
@@ -53,9 +53,16 @@ void Animal::saveType(ofstream& ofs) const
 }
 void Animal::saveTypeBin(ofstream& ofs) const
 {
-    char type[2];
-    strncpy(type, typeid(*this).name() + 1, 2);
-    ofs.write((const char*)type, 2);
+    string typeAsString;
+    string returnedType = typeid(*this).name();
+    for (int i=1; i < returnedType.length(); i++){
+        typeAsString.push_back(returnedType[i]);
+    }
+    char* typeAsChars = new char [typeAsString.length()+1];
+    strcpy(typeAsChars,typeAsString.c_str());
+
+
+    ofs.write((const char*)typeAsChars,typeAsString.length() + 1);
 }
 void Animal::Save(ofstream& ofs) {
     saveType( ofs );
@@ -245,9 +252,6 @@ const char*	Horse::GetType() const
 {
     return m_type;
 };
-//virtual Animal Horse::copy() const {
-//    Animal mirror = new Horse(this.m_color, this.m_childCount, this)
-//};
 
 Flamingo::Flamingo() : m_avgHeight(0) {};//set the default color to GRAY and other params to 0
 
@@ -461,7 +465,7 @@ Zoo Zoo::operator+( const Zoo& other ) const{
 
 }; //returns a new Zoo with the properties of this and animals of this and other (need to deep copy the data of other)
 Zoo& Zoo::operator+=( Animal* an ){
-    AddAnimal(an);
+    this->AddAnimal(an);
     return *this;
 };
 //
@@ -577,6 +581,7 @@ void Zoo::LoadAnimals(ifstream& is) {
 }
 void Zoo::loadAnimalsBin(ifstream& is)
 {
+
     is.read((char*)&m_numOfAnimals, sizeof(m_numOfAnimals));
 
     // allocate memory for products.
