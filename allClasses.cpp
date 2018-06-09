@@ -6,8 +6,18 @@ using namespace std;
 Animal::Animal() : m_color((char*)"GRAY"), m_childCount(0), m_avgLifetime(0) {};
 Animal::Animal( const char* color, int childs, float avgLifetime ) :  m_color(strdup(color)), m_childCount(childs), m_avgLifetime(avgLifetime) {};
 Animal::Animal(ifstream& in_file) {
-    in_file.read((char*)&m_color, sizeof(m_color));
+    char color[256] = {0};
+    while(strlen(color) == 0)
+    {
+        in_file.getline(color, 256, '\n');
+    }
+    m_color = new char[strlen(color + 1)];
+    strcpy(m_color,color);
+
     in_file.read((char*)&m_childCount, sizeof(m_childCount));
+
+    in_file.getline(color, 256, '\n');
+
     in_file.read((char*)&m_avgLifetime, sizeof(m_avgLifetime));
 }
 // TBD
@@ -84,7 +94,10 @@ Mammals::Mammals() : m_milkLiters(0), m_pregnancyTime(0) {};
 Mammals::Mammals( const char* color, int childs, float avgLifetime, float preg, float milk ) : Animal(color, childs, avgLifetime), m_pregnancyTime(preg), m_milkLiters(milk) {};
 
 Mammals::Mammals(ifstream& in_file): Animal(in_file) {
+    char temp[256] = {0};
+    in_file.getline(temp,256,'\n');
     in_file.read((char*)&m_pregnancyTime, sizeof(m_pregnancyTime));
+    in_file.getline(temp,256,'\n');
     in_file.read((char*)&m_milkLiters, sizeof(m_milkLiters));
 }
 
@@ -127,7 +140,10 @@ Birds::Birds() : m_incubationTime(0) {}
 Birds::Birds( const char* color, int childs, float avgLifetime, float incubation ) : Animal(color, childs, avgLifetime), m_incubationTime(incubation) {}
 
 
-Birds::Birds(ifstream& in_file): Animal(in_file) {
+Birds::Birds(ifstream& in_file) : Animal(in_file) {
+    char temp[256] = {0};
+    in_file.getline(temp, 256, '\n');
+
     in_file.read((char*)&m_incubationTime, sizeof(m_incubationTime));
 }
 
@@ -159,7 +175,13 @@ Fish::Fish() : m_finCount(0), m_gillsCount(0) {};//set the default color to GRAY
 Fish::Fish(const char* color, int childs, float avgLifetime, int fin, int gills) : Animal(color, childs, avgLifetime), m_finCount(fin), m_gillsCount(gills) {}
 
 Fish::Fish(ifstream& in_file): Animal(in_file) {
+    char temp[256] = {0};
+    in_file.getline(temp, 256, '\n');
+
     in_file.read((char*)&m_finCount, sizeof(m_finCount));
+
+    in_file.getline(temp, 256, '\n');
+
     in_file.read((char*)&m_gillsCount, sizeof(m_gillsCount));
 }
 
@@ -216,7 +238,13 @@ Horse::Horse() : Mammals(), m_type(NULL) {};//set the default color to GRAY and 
 Horse::Horse(const char* color, int childs, float avgLifetime, float preg, float milk, const char* type) : Mammals(color, childs, avgLifetime, preg, milk), Animal(color,childs,avgLifetime), m_type(strdup(type)) {}
 
 Horse::Horse(ifstream& in_file): Mammals(in_file) {
-    in_file.read((char*)&m_type, sizeof(m_type));
+    char type[256] = {0};
+    while(strlen(type) == 0)
+    {
+        in_file.getline(type, 256, '\n');
+    }
+    m_type = new char[strlen(type + 1)];
+    strcpy(m_type,type);
 }
 
 Animal* Horse::copy()
@@ -255,12 +283,15 @@ const char*	Horse::GetType() const
     return m_type;
 };
 
-Flamingo::Flamingo() : m_avgHeight(0) {};//set the default color to GRAY and other params to 0
+Flamingo::Flamingo() : Birds(), m_avgHeight(0) {};//set the default color to GRAY and other params to 0
 
 
 Flamingo::Flamingo(const char* color, int childs, float avgLifetime, float incubation, float avgHeight) : Birds(color, childs, avgLifetime, incubation), Animal(color, childs, avgLifetime), m_avgHeight(avgHeight) {}
 
-Flamingo::Flamingo(ifstream& in_file): Birds(in_file) {
+Flamingo::Flamingo(ifstream& in_file): Birds(in_file), Animal(in_file) {
+    char temp[256] = {0};
+    in_file.getline(temp, 256, '\n');
+
     in_file.read((char*)&m_avgHeight, sizeof(m_avgHeight));
 }
 
@@ -314,8 +345,14 @@ void MammalsFish::Load(ifstream& ifs){
 
 GoldFish::GoldFish() : m_avgWeight(0), m_avgLength(0) {};//set the default color to GRAY and other params to 0
 GoldFish::GoldFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_avgWeight(avgW), m_avgLength(avgL) {};
-GoldFish::GoldFish( ifstream& ifs ): MammalsFish(ifs), Mammals(ifs), Fish(ifs) {
+GoldFish::GoldFish( ifstream& ifs ): MammalsFish(ifs), Mammals(ifs), Fish(ifs), Animal(ifs) {
+    char temp[256] = {0};
+    ifs.getline(temp, 256, '\n');
+
     ifs.read((char*)&m_avgWeight, sizeof(m_avgWeight));
+
+    ifs.getline(temp, 256, '\n');
+
     ifs.read((char*)&m_avgLength, sizeof(m_avgLength));
 };//init the GoldFish from a binary file
 //virtual ~GoldFish();
@@ -357,7 +394,7 @@ float GoldFish::GetLength() const
 Mermaid::Mermaid() : MammalsFish(), m_firstName(NULL), m_lastName(NULL) {};//set the default color to GRAY and other params to 0
 
 Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName ) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_firstName(strdup(firstName)), m_lastName(strdup(lastName)) {}
-Mermaid::Mermaid(ifstream& ifs) : MammalsFish(ifs), Mammals(ifs), Fish(ifs) {
+Mermaid::Mermaid(ifstream& ifs) : MammalsFish(ifs), Mammals(ifs), Fish(ifs), Animal(ifs) {
     char firstName[256] = {0};
     while(strlen(firstName) == 0)
     {
@@ -662,14 +699,13 @@ void Zoo::loadAnimalsBin(ifstream& is)
 }
 Animal* Zoo::createAnimalBin(ifstream& ifs)
 {
-
-
-
     char type[256] = {0};
-    ifs.getline(type, 256, '\n');
-    char* animalType = new char[strlen(type) + 1];
-
-    strcpy(animalType, type);
+    while(strlen(type) == 0)
+    {
+        ifs.getline(type, 256, '\n');
+    }
+    char* animalType = new char[strlen(type + 1)];
+    strcpy(animalType,type);
 
     if( strcmp(animalType, "Horse" ) == 0)
         return new Horse(ifs);
