@@ -72,12 +72,12 @@ void Animal::SaveBin(ofstream& ofs) const
 }
 void Animal::Load(ifstream& ifs)
 {
-    char temp[256] = {0};
-    ifs.getline(temp, 256, '\n');
+    char color[256] = {0};
+    ifs.getline(color, 256, '\n');
 
-    m_color = new char[strlen(temp) + 1];
+    m_color = new char[strlen(color) + 1];
 
-    strcpy(m_color,temp);
+    strcpy(m_color,color);
 
     ifs >> m_childCount;
     ifs >> m_avgLifetime;
@@ -105,13 +105,6 @@ Mammals::Mammals(ifstream& in_file): Animal(in_file) {
     in_file.read((char*)&m_pregnancyTime, sizeof(m_pregnancyTime));
     in_file.read((char*)&m_milkLiters, sizeof(m_milkLiters));
 }
-//TBD
-// Mammals::Mammals( ifstream& in_file )
-// {
-
-// };//init the Mammals from a binary file
-
-//virtual ~Mammals::Mammals();
 
 void Mammals::SaveBin(ofstream& ofs) const
 {
@@ -191,9 +184,18 @@ void Fish::Save(ofstream &ofs) {
     ofs << "\n" << m_finCount ;
     ofs << "\n" << m_gillsCount ;
 }
+void Fish::SaveNoAnimal(ofstream& ofs){
+    ofs << "\n" << m_finCount ;
+    ofs << "\n" << m_gillsCount ;
+}
 void Fish::Load(ifstream& ifs)
 {
     Animal::Load(ifs);
+    ifs >> m_finCount ;
+    ifs >> m_gillsCount;
+}
+
+void Fish::LoadNoAnimal(ifstream& ifs){
     ifs >> m_finCount ;
     ifs >> m_gillsCount;
 }
@@ -279,7 +281,7 @@ float Flamingo::GetHeight() const
 MammalsFish::MammalsFish() {};//set the default color to GRAY and other params to 0
 
 MammalsFish::MammalsFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills) : Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills) {}
-//MammalsFish::MammalsFish( ifstream& in_file );//init the MammalsFish from a binary file
+MammalsFish::MammalsFish( ifstream& ifs ) : Mammals(ifs), Fish(ifs) {};//init the MammalsFish from a binary file
 //virtual ~MammalsFish();
 
 void MammalsFish::SaveBin(ofstream& ofs) const
@@ -289,17 +291,16 @@ void MammalsFish::SaveBin(ofstream& ofs) const
 }
 void MammalsFish::Save(ofstream &ofs) {
     Mammals::Save(ofs);
-    Fish::Save(ofs);
+    Fish::SaveNoAnimal(ofs);
 };
-void MammalsFish::Load(ifstream& ifs) {
+void MammalsFish::Load(ifstream& ifs){
     Mammals::Load(ifs);
-    Fish::Load(ifs);
-
+    Fish::LoadNoAnimal(ifs);
 };
 
 GoldFish::GoldFish() : m_avgWeight(0), m_avgLength(0) {};//set the default color to GRAY and other params to 0
 GoldFish::GoldFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, float avgW, float avgL) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_avgWeight(avgW), m_avgLength(avgL) {}
-//GoldFish::GoldFish( ifstream& in_file );//init the GoldFish from a binary file
+GoldFish::GoldFish( ifstream& ifs ): MammalsFish(ifs) {};//init the GoldFish from a binary file
 //virtual ~GoldFish();
 
 void GoldFish::SaveBin(ofstream& ofs) const
@@ -333,7 +334,7 @@ float GoldFish::GetLength() const
 Mermaid::Mermaid() : MammalsFish(), m_firstName(NULL), m_lastName(NULL) {};//set the default color to GRAY and other params to 0
 
 Mermaid::Mermaid( const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills, const char* firstName, const char* lastName ) : MammalsFish(color, childs, avgLifetime, preg, milk, fin, gills), Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills), Animal(color, childs, avgLifetime), m_firstName(strdup(firstName)), m_lastName(strdup(lastName)) {}
-//Mermaid( ifstream& in_file );//init the Mermaid from a binary file
+Mermaid(ifstream& ifs) : MammalsFish(ifs) {};//init the Mermaid from a binary file
 //virtual ~Mermaid();
 
 void Mermaid::SaveBin(ofstream& ofs) const
@@ -353,8 +354,11 @@ void Mermaid::Load(ifstream& ifs)
     char temp[256] = {0};
     ifs.getline(temp, 256, '\n');
 
-    m_firstName = new char[strlen(temp) + 1];
-    strcpy(m_firstName, temp);
+    char firstName[256] = {0};
+    ifs.getline(firstName, 256, '\n');
+
+    m_firstName = new char[strlen(firstName) + 1];
+    strcpy(m_firstName, firstName);
 
     char temp2[256] = {0};
     ifs.getline(temp2, 256, '\n');
@@ -375,7 +379,15 @@ const char*	Mermaid::GetLastName() const
 Zoo::Zoo() : m_name(NULL), m_address(NULL), m_ticketPrice(0), m_openHours(NULL), m_closeHours(NULL), m_numOfAnimals(0), m_animals(NULL) {};//default c'tor  - all to 0 or null
 Zoo::Zoo(const char* name, const char* address, float ticket, const char* open, const char* close) : m_name(strdup(name)), m_address(strdup(address)), m_ticketPrice(ticket), m_openHours(strdup(open)), m_closeHours(strdup(close)), m_numOfAnimals(0), m_animals(NULL) {}
 
-// Zoo( ifstream& in_file );//c'tor that gets a binary file and loads the data of the zoo from the file
+Zoo::Zoo( ifstream& in_file ){
+    in_file.read((char*)&m_name, sizeof(m_name));
+    in_file.read((char*)&m_address, sizeof(m_address));
+    in_file.read((char*)&m_ticketPrice, sizeof(m_ticketPrice));
+    in_file.read((char*)&m_openHours, sizeof(m_openHours));
+    in_file.read((char*)&m_closeHours, sizeof(m_closeHours));
+
+    loadAnimalsBin(in_file);
+};//c'tor that gets a binary file and loads the data of the zoo from the file
 //virtual ~Zoo();//d'tor
 
 const char*	Zoo::GetName() const
@@ -442,7 +454,7 @@ Zoo Zoo::operator+( const Zoo& other ) const{
         newZoo->AddAnimal(m_animals[i]);
     }
     Animal** otherAnimals = other.GetAnimals();
-    for (unsigned i = 0; i < m_numOfAnimals; i++){
+    for (unsigned i = 0; i < other.GetNumOfAnimals(); i++){
         newZoo->AddAnimal(otherAnimals[i]);
     }
     return *newZoo;
@@ -562,6 +574,39 @@ void Zoo::LoadAnimals(ifstream& is) {
 
         m_animals[i] = p;
     }
+}
+void Zoo::loadAnimalsBin(ifstream& is)
+{
+    is.read((char*)&m_numOfAnimals, sizeof(m_numOfAnimals));
+
+    // allocate memory for products.
+    m_animals = new Animal*[m_numOfAnimals];
+
+    for( unsigned int i = 0; i < m_numOfAnimals && !is.eof(); ++i )
+    {
+        Animal* p = createAnimalBin(is);  // Creates a new product, identify its type in running time.
+
+        m_animals[i] = p;
+    }
+
+}
+Animal* Zoo::createAnimalBin(ifstream& ifs)
+{
+    char type[256] = {0};
+    ifs.getline(type, 256, '\n');
+    char* animalType = new char[strlen(type) + 1];
+
+    strcpy(animalType, type);
+
+    if( strcmp(animalType, "Horse" ) == 0)
+        return new Horse(ifs);
+    else if( strcmp(animalType, "GoldFish" ) == 0)
+        return new GoldFish(ifs);
+    else if( strcmp(animalType, "Flamingo" ) == 0)
+        return new Flamingo(ifs);
+    else if( strcmp(animalType, "Mermaid" ) == 0)
+        return new Mermaid(ifs);
+    else return NULL;
 }
 void Zoo::SaveAnimalsBin(ofstream& ofs) const
 {

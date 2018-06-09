@@ -98,6 +98,8 @@ public:
 	int		GetGillsCount() const;//return the gills count of the animal
     virtual void Save( ofstream& ofs);
     virtual void Load(ifstream& ifs);
+    void LoadNoAnimal(ifstream& ifs);
+    void SaveNoAnimal(ofstream& ofs);
     virtual void SaveBin(ofstream& ofs) const;
 
 protected:
@@ -152,7 +154,7 @@ public:
 
 public:
     virtual void Save( ofstream& ofs);
-    virtual void Load(ifstream& ifs);
+    void Load(ifstream& ifs);
     virtual void SaveBin(ofstream& ofs) const;
 //	virtual ~MammalsFish();
 
@@ -196,7 +198,7 @@ public:
 	const char*		GetLastName() const;//return the last name of the mermaid
     Animal* copy();
     virtual void Save( ofstream& ofs);
-    virtual void Load(ifstream& ifs);
+    void Load(ifstream& ifs);
     virtual void SaveBin(ofstream& ofs) const;
 protected:
 	char* m_firstName;
@@ -241,6 +243,8 @@ public:
 private:
     void SaveAnimals( ofstream& ofs ) const;
     void LoadAnimals ( ifstream& is );
+    void loadAnimalsBin(ifstream& is);
+    Animal* createAnimalBin(ifstream& in_file);
     void clear();
     Animal* CreateAnimal( ifstream& is );
     void SaveAnimalsBin(ofstream& ofs) const;
