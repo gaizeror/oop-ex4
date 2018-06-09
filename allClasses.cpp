@@ -237,7 +237,7 @@ Horse::Horse() : Mammals(), m_type(NULL) {};//set the default color to GRAY and 
 
 Horse::Horse(const char* color, int childs, float avgLifetime, float preg, float milk, const char* type) : Mammals(color, childs, avgLifetime, preg, milk), Animal(color,childs,avgLifetime), m_type(strdup(type)) {}
 
-Horse::Horse(ifstream& in_file): Mammals(in_file) {
+Horse::Horse(ifstream& in_file): Mammals(in_file), Animal(in_file) {
     char type[256] = {0};
     while(strlen(type) == 0)
     {
@@ -324,7 +324,7 @@ float Flamingo::GetHeight() const
 MammalsFish::MammalsFish() {};//set the default color to GRAY and other params to 0
 
 MammalsFish::MammalsFish(const char* color, int childs, float avgLifetime, float preg, float milk, int fin, int gills) : Mammals(color, childs, avgLifetime, preg, milk), Fish(color, childs, avgLifetime, fin, gills) {}
-MammalsFish::MammalsFish( ifstream& ifs ) : Mammals(ifs), Fish(ifs) {};//init the MammalsFish from a binary file
+MammalsFish::MammalsFish( ifstream& ifs ) : Mammals(ifs), Fish(ifs), Animal(ifs) {};//init the MammalsFish from a binary file
 //virtual ~MammalsFish();
 
 Animal* MammalsFish::copy() {};
