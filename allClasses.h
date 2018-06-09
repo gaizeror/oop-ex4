@@ -100,6 +100,7 @@ public:
     virtual void Load(ifstream& ifs);
     void LoadNoAnimal(ifstream& ifs);
     void SaveNoAnimal(ofstream& ofs);
+    void SaveBinNoAnimal(ofstream& ofs) const;
     virtual void SaveBin(ofstream& ofs) const;
 
 protected:
